@@ -4436,8 +4436,10 @@ Read5(mat_t *mat, matvar_t *matvar)
             nfields = matvar->internal->num_fields;
             fields = (matvar_t **)matvar->data;
             for ( i = 0; i < len*nfields; i++ ) {
-                fields[i]->internal->fp = mat;
-                Read5(mat,fields[i]);
+                if (fields[i]) {
+                    fields[i]->internal->fp = mat;
+                    Read5(mat, fields[i]);
+                }
             }
             break;
         }
@@ -4451,8 +4453,10 @@ Read5(mat_t *mat, matvar_t *matvar)
             }
             cells = (matvar_t **)matvar->data;
             for ( i = 0; i < len; i++ ) {
-                cells[i]->internal->fp = mat;
-                Read5(mat,cells[i]);
+                if (cells[i]) {
+                    cells[i]->internal->fp = mat;
+                    Read5(mat, cells[i]);
+                }
             }
             /* FIXME: */
             matvar->data_type = MAT_T_CELL;
